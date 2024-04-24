@@ -1,9 +1,11 @@
 import org.jetbrains.compose.ExperimentalComposeLibrary
+import com.vanniktech.maven.publish.SonatypeHost
 
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.jetbrainsCompose)
+    id("com.vanniktech.maven.publish") version "0.28.0"
 }
 
 kotlin {
@@ -15,6 +17,7 @@ kotlin {
                 jvmTarget = "1.8"
             }
         }
+        publishLibraryVariants("release", "debug")
     }
     listOf(
         iosX64(),
@@ -64,11 +67,54 @@ kotlin {
 }
 
 android {
-    namespace = "com.stevdza_san.messagebar"
+    namespace = "com.stevdza_san"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
     defaultConfig {
         minSdk = libs.versions.android.minSdk.get().toInt()
     }
+}
+
+mavenPublishing {
+    coordinates(
+        groupId = "com.stevdza-san",
+        artifactId = "messagebarkmp",
+        version = "1.0.0"
+    )
+
+    // Configure POM metadata for the published artifact
+    pom {
+        name.set("Message Bar KMP")
+        description.set("Animated Message Bar UI that can be wrapped around your composable content in order to display Error/Success messages in your app. Adapted to Material 3.")
+        inceptionYear.set("2024")
+        url.set("https://github.com/stevdza-san/MessageBarKMP")
+
+        licenses {
+            license {
+                name.set("MIT")
+                url.set("https://opensource.org/licenses/MIT")
+            }
+        }
+
+        // Specify developers information
+        developers {
+            developer {
+                id.set("stevdza-san")
+                name.set("Stefan Jovanovic")
+                email.set("stefan.jovanavich@gmail.com")
+            }
+        }
+
+        // Specify SCM information
+        scm {
+            url.set("https://github.com/stevdza-san/MessageBarKMP")
+        }
+    }
+
+    // Configure publishing to Maven Central
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+
+    // Enable GPG signing for all publications
+    signAllPublications()
 }
 
 task("testClasses")
