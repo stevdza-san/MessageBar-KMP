@@ -1,11 +1,13 @@
-<h1 align="center">MessageBar KMP (Compose Multiplatform)</h1></br>
+<p align="center">
+  <img src="https://i.postimg.cc/ryD7MBZB/Message-Bar-KMP.png" width="800"/>
+</p>
 
 <p align="center">
   <a href="https://central.sonatype.com/artifact/com.stevdza-san/messagebarkmp"><img alt="Profile" src="https://badgen.net/badge/Maven Central/v1.0.0/blue?icon=github"/></a>
 </p><br>
 
 <p align="center">
-Message Bar is a simple animated UI component that you can wrap around your composable content.
+👻 Message Bar is a simple animated UI component that you can wrap around your composable content.
 This component is used to display Error/Success messages to your users,
 and it is built to supports Material 3 design system.
 </p><br>
