@@ -85,7 +85,7 @@ ContentWithMessageBar(messageBarState = state) {
 
 ## Like what you see? :yellow_heart:
 ⭐ Give a star to this repository. <br />
-☕ Let's take a coffee. You're paying!😜 https://ko-fi.com/stevdza_san
+☕ Let's get a coffee. You're paying!😜 https://ko-fi.com/stevdza_san
 
 # License
 ```xml
