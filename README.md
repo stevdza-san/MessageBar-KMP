@@ -9,7 +9,7 @@
 <p align="center">
 👻 Message Bar is a simple animated UI component that you can wrap around your composable content.
 This component is used to display Error/Success messages to your users,
-and it is built to supports Material 3 design system.
+and it is built to support Material 3 design system.
 </p><br>
 
 <p align="center">
