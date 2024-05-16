@@ -3,13 +3,13 @@
 </p>
 
 <p align="center">
-  <a href="https://central.sonatype.com/artifact/com.stevdza-san/messagebarkmp"><img alt="Profile" src="https://badgen.net/badge/Maven Central/v1.0.0/blue?icon=github"/></a>
+  <a href="https://central.sonatype.com/artifact/com.stevdza-san/messagebarkmp"><img alt="Profile" src="https://badgen.net/badge/Maven Central/v1.0.1/blue?icon=github"/></a>
 </p><br>
 
 <p align="center">
 👻 Message Bar is a simple animated UI component that you can wrap around your composable content.
 This component is used to display Error/Success messages to your users,
-and it is built to support Material 3 design system.
+and it is built to support Material 3 design system. Android/iOS/Desktop platforms are supported.
 </p><br>
 
 <p align="center">
@@ -20,10 +20,10 @@ and it is built to support Material 3 design system.
 
 ### Gradle
 
-You can add a dependency inside the `androidMain` or `commonMain` source set:
+You can add a dependency inside the `commonMain` source set:
 ```gradle
 commonMain.dependencies {
-    implementation("com.stevdza-san:messagebarkmp:1.0.0")
+    implementation("com.stevdza-san:messagebarkmp:1.0.1")
 }
 ```
 ## Usage
