@@ -1,5 +1,6 @@
 import org.jetbrains.compose.ExperimentalComposeLibrary
 import com.vanniktech.maven.publish.SonatypeHost
+import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 plugins {
     alias(libs.plugins.androidLibrary)
@@ -10,6 +11,7 @@ plugins {
 
 kotlin {
 //    targetHierarchy.default()
+    jvm("desktop")
     androidTarget {
         publishLibraryVariants("release")
         compilations.all {
@@ -63,6 +65,12 @@ kotlin {
         val iosX64Main by getting {
             dependencies {}
         }
+
+        val desktopMain by getting {
+            dependencies {
+                implementation(compose.desktop.currentOs)
+            }
+        }
     }
 }
 
@@ -74,11 +82,26 @@ android {
     }
 }
 
+
+compose.desktop {
+    application {
+        mainClass = "MainKt"
+
+        nativeDistributions {
+            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+            packageName = "com.stevdza-san.messagebarkmp"
+            packageVersion = "1.0.1"
+            description = "Message Bar KMP"
+            copyright = "© 2024 Stevdza-San. All rights reserved."
+        }
+    }
+}
+
 mavenPublishing {
     coordinates(
         groupId = "com.stevdza-san",
         artifactId = "messagebarkmp",
-        version = "1.0.0"
+        version = "1.0.1"
     )
 
     // Configure POM metadata for the published artifact
