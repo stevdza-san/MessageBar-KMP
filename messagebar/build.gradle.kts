@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.jetbrainsCompose)
+    alias(libs.plugins.composeCompiler)
     id("com.vanniktech.maven.publish") version "0.28.0"
 }
 
@@ -90,7 +91,7 @@ compose.desktop {
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "com.stevdza-san.messagebarkmp"
-            packageVersion = "1.0.1"
+            packageVersion = "1.0.2"
             description = "Message Bar KMP"
             copyright = "© 2024 Stevdza-San. All rights reserved."
         }
@@ -101,7 +102,7 @@ mavenPublishing {
     coordinates(
         groupId = "com.stevdza-san",
         artifactId = "messagebarkmp",
-        version = "1.0.1"
+        version = "1.0.2"
     )
 
     // Configure POM metadata for the published artifact

@@ -16,9 +16,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -37,12 +40,18 @@ enum class MessageBarPosition {
  * [MessageBarPosition.TOP] and [MessageBarPosition.BOTTOM] as available.
  * @param visibilityDuration - How long the Message Bar should stay visible. A default value is 3 seconds.
  * @param showCopyButton - Whether to show a copy button, on a message bar of an error type.
+ * @param copyButtonFontSize - The font size of the of the copy button text.
+ * @param copyButtonFontStyle - [FontStyle] of the copy button text.
+ * @param copyButtonFontWeight - [FontWeight] of the copy button text.
  * @param onMessageCopied - This lambda is used to display a custom info message, when a user clicks
  * the copy button and copy an error message to the clipboard. Usually a Toast message like 'Copied' is fine.
  * @param successIcon - Customize the [ImageVector] icon of a success message.
  * @param errorIcon - Customize the [ImageVector] icon of an error message.
  * @param errorMaxLines - In how many lines of text you want to display an error message.
  * @param successMaxLines - In how many lines of text you want to display a success message.
+ * @param fontSize - The font size of the of the Success/Error text.
+ * @param fontStyle - [FontStyle] of the Success/Error text.
+ * @param fontWeight - [FontWeight] of the Success/Error text.
  * @param contentBackgroundColor - The background color on top of which the [content] lambda will be placed.
  * @param successContainerColor - Container color of a success message bar.
  * @param successContentColor - Text color of the success message bar.
@@ -61,11 +70,17 @@ fun ContentWithMessageBar(
     position: MessageBarPosition = MessageBarPosition.TOP,
     visibilityDuration: Long = 3000L,
     showCopyButton: Boolean = true,
+    copyButtonFontSize: TextUnit = MaterialTheme.typography.labelMedium.fontSize,
+    copyButtonFontStyle: FontStyle = FontStyle.Normal,
+    copyButtonFontWeight: FontWeight = FontWeight.Normal,
     onMessageCopied: (() -> Unit)? = null,
     successIcon: ImageVector = Icons.Default.Check,
     errorIcon: ImageVector = Icons.Default.Warning,
     errorMaxLines: Int = 1,
     successMaxLines: Int = 1,
+    fontSize: TextUnit = MaterialTheme.typography.labelLarge.fontSize,
+    fontStyle: FontStyle = FontStyle.Normal,
+    fontWeight: FontWeight = FontWeight.Normal,
     contentBackgroundColor: Color = MaterialTheme.colorScheme.surface,
     successContainerColor: Color = MaterialTheme.colorScheme.primaryContainer,
     successContentColor: Color = MaterialTheme.colorScheme.onPrimaryContainer,
@@ -98,8 +113,14 @@ fun ContentWithMessageBar(
             successIcon = successIcon,
             errorIcon = errorIcon,
             showCopyButton = showCopyButton,
+            copyButtonFontSize = copyButtonFontSize,
+            copyButtonFontStyle = copyButtonFontStyle,
+            copyButtonFontWeight = copyButtonFontWeight,
             errorMaxLines = errorMaxLines,
             successMaxLines = successMaxLines,
+            fontSize = fontSize,
+            fontStyle = fontStyle,
+            fontWeight = fontWeight,
             successContainerColor = successContainerColor,
             successContentColor = successContentColor,
             errorContainerColor = errorContainerColor,
@@ -122,6 +143,9 @@ internal fun MessageBarComponent(
     errorIcon: ImageVector,
     errorMaxLines: Int,
     successMaxLines: Int,
+    fontSize: TextUnit,
+    fontStyle: FontStyle,
+    fontWeight: FontWeight,
     successContainerColor: Color,
     successContentColor: Color,
     errorContainerColor: Color,
@@ -131,6 +155,9 @@ internal fun MessageBarComponent(
     verticalPadding: Dp,
     horizontalPadding: Dp,
     showCopyButton: Boolean,
+    copyButtonFontSize: TextUnit,
+    copyButtonFontStyle: FontStyle,
+    copyButtonFontWeight: FontWeight,
     onMessageCopied: (() -> Unit)? = null
 ) {
     var showMessageBar by remember { mutableStateOf(false) }
@@ -167,6 +194,9 @@ internal fun MessageBarComponent(
                 errorIcon = errorIcon,
                 errorMaxLines = errorMaxLines,
                 successMaxLines = successMaxLines,
+                fontSize = fontSize,
+                fontStyle = fontStyle,
+                fontWeight = fontWeight,
                 successContainerColor = successContainerColor,
                 successContentColor = successContentColor,
                 errorContainerColor = errorContainerColor,
@@ -174,6 +204,9 @@ internal fun MessageBarComponent(
                 verticalPadding = verticalPadding,
                 horizontalPadding = horizontalPadding,
                 showCopyButton = showCopyButton,
+                copyButtonFontSize = copyButtonFontSize,
+                copyButtonFontStyle = copyButtonFontStyle,
+                copyButtonFontWeight = copyButtonFontWeight,
                 onMessageCopied = onMessageCopied
             )
         }
@@ -188,6 +221,9 @@ internal fun MessageBar(
     errorIcon: ImageVector,
     errorMaxLines: Int,
     successMaxLines: Int,
+    fontSize: TextUnit,
+    fontStyle: FontStyle,
+    fontWeight: FontWeight,
     successContainerColor: Color,
     successContentColor: Color,
     errorContainerColor: Color,
@@ -195,6 +231,9 @@ internal fun MessageBar(
     verticalPadding: Dp,
     horizontalPadding: Dp,
     showCopyButton: Boolean,
+    copyButtonFontSize: TextUnit,
+    copyButtonFontStyle: FontStyle,
+    copyButtonFontWeight: FontWeight,
     onMessageCopied: (() -> Unit)? = null
 ) {
     val clipboardManager = LocalClipboardManager.current
@@ -229,7 +268,9 @@ internal fun MessageBar(
                 text = message ?: (error ?: "Unknown"),
                 color = if (error != null) errorContentColor
                 else successContentColor,
-                fontSize = MaterialTheme.typography.labelLarge.fontSize,
+                fontSize = fontSize,
+                fontStyle = fontStyle,
+                fontWeight = fontWeight,
                 overflow = TextOverflow.Ellipsis,
                 maxLines = if (error != null) errorMaxLines else successMaxLines
             )
@@ -249,7 +290,9 @@ internal fun MessageBar(
                     Text(
                         text = "Copy",
                         color = errorContentColor,
-                        fontSize = MaterialTheme.typography.labelMedium.fontSize,
+                        fontSize = copyButtonFontSize,
+                        fontStyle = copyButtonFontStyle,
+                        fontWeight = copyButtonFontWeight,
                         textAlign = TextAlign.End
                     )
                 }
