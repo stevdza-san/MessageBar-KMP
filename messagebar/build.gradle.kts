@@ -91,7 +91,7 @@ compose.desktop {
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "com.stevdza-san.messagebarkmp"
-            packageVersion = "1.0.2"
+            packageVersion = "1.0.3"
             description = "Message Bar KMP"
             copyright = "© 2024 Stevdza-San. All rights reserved."
         }
@@ -102,7 +102,7 @@ mavenPublishing {
     coordinates(
         groupId = "com.stevdza-san",
         artifactId = "messagebarkmp",
-        version = "1.0.2"
+        version = "1.0.3"
     )
 
     // Configure POM metadata for the published artifact
