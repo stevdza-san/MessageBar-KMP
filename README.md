@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <a href="https://central.sonatype.com/artifact/com.stevdza-san/messagebarkmp"><img alt="Profile" src="https://badgen.net/badge/Maven Central/v1.0.1/blue?icon=github"/></a>
+  <a href="https://central.sonatype.com/artifact/com.stevdza-san/messagebarkmp"><img alt="Profile" src="https://badgen.net/badge/Maven Central/v1.0.2/blue?icon=github"/></a>
 </p><br>
 
 <p align="center">
@@ -23,7 +23,7 @@ and it is built to support Material 3 design system. Android/iOS/Desktop platfor
 You can add a dependency inside the `commonMain` source set:
 ```gradle
 commonMain.dependencies {
-    implementation("com.stevdza-san:messagebarkmp:1.0.1")
+    implementation("com.stevdza-san:messagebarkmp:1.0.2")
 }
 ```
 ## Usage
