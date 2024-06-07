@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://i.postimg.cc/ryD7MBZB/Message-Bar-KMP.png" width="800"/>
+  <img src="https://i.postimg.cc/LXy9YLqb/Message-Bar-KMP.png" width="800"/>
 </p>
 
 <p align="center">
