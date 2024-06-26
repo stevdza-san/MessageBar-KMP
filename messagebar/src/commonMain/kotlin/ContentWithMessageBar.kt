@@ -34,6 +34,7 @@ enum class MessageBarPosition {
     TOP,
     BOTTOM
 }
+
 /**
  * Composable function used to wrap the content around which you want to display a message bar.
  * @param messageBarState - Used to control the message bar itself.
@@ -169,6 +170,7 @@ internal fun MessageBarComponent(
     copyButtonFontFamily: FontFamily?,
     onMessageCopied: (() -> Unit)? = null
 ) {
+    val scope = rememberCoroutineScope()
     var showMessageBar by remember { mutableStateOf(false) }
     val error by rememberUpdatedState(newValue = messageBarState.error?.message)
     val message by rememberUpdatedState(newValue = messageBarState.success)
@@ -177,6 +179,7 @@ internal fun MessageBarComponent(
     DisposableEffect(key1 = messageBarState.updated) {
         showMessageBar = true
         timerManager.scheduleTimer(
+            scope = scope,
             visibilityDuration = visibilityDuration,
             onTimerTriggered = {
                 showMessageBar = false
