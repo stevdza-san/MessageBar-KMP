@@ -1,10 +1,8 @@
 <p align="center">
-  <img src="https://i.postimg.cc/LXy9YLqb/Message-Bar-KMP.png" width="800"/>
+  <a href="https://central.sonatype.com/artifact/com.stevdza-san/messagebarkmp"><img alt="Profile" src="https://badgen.net/badge/Maven Central/v1.0.6/blue?icon=github"/></a>
 </p>
 
-<p align="center">
-  <a href="https://central.sonatype.com/artifact/com.stevdza-san/messagebarkmp"><img alt="Profile" src="https://badgen.net/badge/Maven Central/v1.0.5/blue?icon=github"/></a>
-</p><br>
+# <p align="center">☁️ MessageBar</p>
 
 <p align="center">
 👻 Message Bar is a simple animated UI component that you can wrap around your composable content.
@@ -23,7 +21,7 @@ and it is built to support Material 3 design system. Android/iOS/Desktop platfor
 You can add a dependency inside the `commonMain` source set:
 ```gradle
 commonMain.dependencies {
-    implementation("com.stevdza-san:messagebarkmp:1.0.5")
+    implementation("com.stevdza-san:messagebarkmp:1.0.6")
 }
 ```
 ## Usage
