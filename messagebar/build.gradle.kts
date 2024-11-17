@@ -1,12 +1,14 @@
 import com.vanniktech.maven.publish.SonatypeHost
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
+import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.composeCompiler)
-    id("com.vanniktech.maven.publish") version "0.28.0"
+    id("com.vanniktech.maven.publish") version "0.30.0"
 }
 
 kotlin {
@@ -30,6 +32,25 @@ kotlin {
             baseName = "messagebar"
             isStatic = true
         }
+    }
+    @OptIn(ExperimentalWasmDsl::class)
+    wasmJs {
+        moduleName = "composeApp"
+        browser {
+            val rootDirPath = project.rootDir.path
+            val projectDirPath = project.projectDir.path
+            commonWebpackConfig {
+                outputFileName = "composeApp.js"
+                devServer = (devServer ?: KotlinWebpackConfig.DevServer()).apply {
+                    static = (static ?: mutableListOf()).apply {
+                        // Serve sources to debug inside browser
+                        add(rootDirPath)
+                        add(projectDirPath)
+                    }
+                }
+            }
+        }
+        binaries.executable()
     }
 
     sourceSets {
@@ -69,6 +90,7 @@ kotlin {
                 implementation(compose.desktop.currentOs)
             }
         }
+        val wasmJsMain by getting {}
     }
 }
 
@@ -93,7 +115,7 @@ compose.desktop {
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "com.stevdza-san.messagebarkmp"
-            packageVersion = "1.0.5"
+            packageVersion = "1.0.6"
             description = "Message Bar KMP"
             copyright = "© 2024 Stevdza-San. All rights reserved."
         }
@@ -104,7 +126,7 @@ mavenPublishing {
     coordinates(
         groupId = "com.stevdza-san",
         artifactId = "messagebarkmp",
-        version = "1.0.5"
+        version = "1.0.6"
     )
 
     // Configure POM metadata for the published artifact

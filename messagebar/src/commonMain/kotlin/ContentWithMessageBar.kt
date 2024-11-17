@@ -106,6 +106,10 @@ fun ContentWithMessageBar(
     horizontalPadding: Dp = 12.dp,
     content: @Composable () -> Unit
 ) {
+    LaunchedEffect(key1 = messageBarState) {
+        messageBarState.reset()
+    }
+
     Box(
         modifier = modifier
             .fillMaxSize()

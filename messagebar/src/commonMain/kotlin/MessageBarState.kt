@@ -25,4 +25,10 @@ class MessageBarState {
         error = exception
         updated = !updated
     }
+
+    internal fun reset() {
+        success = null
+        error = null
+        updated = !updated
+    }
 }
