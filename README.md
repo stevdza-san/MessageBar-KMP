@@ -74,6 +74,8 @@ ContentWithMessageBar(messageBarState = state) {
     ) {
         Button(onClick = {
             state.addError(exception = Exception("Internet Unavailable."))
+            // OR
+            // state.addError("Internet Unavailable.")
         }) {
             Text(text = "Click me")
         }
