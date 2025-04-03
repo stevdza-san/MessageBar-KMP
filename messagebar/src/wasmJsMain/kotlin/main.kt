@@ -19,13 +19,14 @@ fun main() {
 
         ContentWithMessageBar(
             messageBarState = messageBarState,
-            position = MessageBarPosition.BOTTOM
+            position = MessageBarPosition.BOTTOM,
+            showCopyButtonOnSuccess = true
         ) {
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
-                Button(onClick = { messageBarState.addSuccess("Success!") }) {
+                Button(onClick = { messageBarState.addError("Error has occurred.!") }) {
                     Text(text = "Click me!")
                 }
             }

@@ -41,7 +41,8 @@ enum class MessageBarPosition {
  * @param position - Configure where you want to position the Message Bar.
  * [MessageBarPosition.TOP] and [MessageBarPosition.BOTTOM] as available.
  * @param visibilityDuration - How long the Message Bar should stay visible. A default value is 3 seconds.
- * @param showCopyButton - Whether to show a copy button, on a message bar of an error type.
+ * @param showCopyButton - Whether to show a copy button, on a message bar of an Error type.
+ * @param showCopyButtonOnSuccess - Whether to show a copy button, on a message bar of a Success type.
  * @param copyButtonFontSize - The font size of the of the copy button text.
  * @param copyButtonFontStyle - [FontStyle] of the copy button text.
  * @param copyButtonFontWeight - [FontWeight] of the copy button text.
@@ -74,6 +75,7 @@ fun ContentWithMessageBar(
     position: MessageBarPosition = MessageBarPosition.TOP,
     visibilityDuration: Long = 3000L,
     showCopyButton: Boolean = true,
+    showCopyButtonOnSuccess: Boolean = false,
     copyButtonFontSize: TextUnit = MaterialTheme.typography.labelMedium.fontSize,
     copyButtonFontStyle: FontStyle = FontStyle.Normal,
     copyButtonFontWeight: FontWeight = FontWeight.Normal,
@@ -123,6 +125,7 @@ fun ContentWithMessageBar(
             successIcon = successIcon,
             errorIcon = errorIcon,
             showCopyButton = showCopyButton,
+            showCopyButtonOnSuccess = showCopyButtonOnSuccess,
             copyButtonFontSize = copyButtonFontSize,
             copyButtonFontStyle = copyButtonFontStyle,
             copyButtonFontWeight = copyButtonFontWeight,
@@ -168,6 +171,7 @@ internal fun MessageBarComponent(
     verticalPadding: Dp,
     horizontalPadding: Dp,
     showCopyButton: Boolean,
+    showCopyButtonOnSuccess: Boolean,
     copyButtonFontSize: TextUnit,
     copyButtonFontStyle: FontStyle,
     copyButtonFontWeight: FontWeight,
@@ -176,8 +180,11 @@ internal fun MessageBarComponent(
 ) {
     val scope = rememberCoroutineScope()
     var showMessageBar by remember { mutableStateOf(false) }
-    val error by rememberUpdatedState(newValue = messageBarState.error?.message)
-    val message by rememberUpdatedState(newValue = messageBarState.success)
+
+    // Retrieve both error message and exception message
+    val errorMessage by rememberUpdatedState(newValue = messageBarState.errorMessage ?: messageBarState.errorException?.message)
+    val successMessage by rememberUpdatedState(newValue = messageBarState.success)
+
     val timerManager = remember { TimerManager() }
 
     DisposableEffect(key1 = messageBarState.updated) {
@@ -198,14 +205,13 @@ internal fun MessageBarComponent(
             Arrangement.Top else Arrangement.Bottom
     ) {
         AnimatedVisibility(
-            visible = messageBarState.error != null && showMessageBar
-                    || messageBarState.success != null && showMessageBar,
+            visible = (errorMessage != null || successMessage != null) && showMessageBar,
             enter = enterAnimation,
             exit = exitAnimation
         ) {
             MessageBar(
-                message = message,
-                error = error,
+                successMessage = successMessage,
+                errorMessage = errorMessage,
                 successIcon = successIcon,
                 errorIcon = errorIcon,
                 errorMaxLines = errorMaxLines,
@@ -221,6 +227,7 @@ internal fun MessageBarComponent(
                 verticalPadding = verticalPadding,
                 horizontalPadding = horizontalPadding,
                 showCopyButton = showCopyButton,
+                showCopyButtonOnSuccess = showCopyButtonOnSuccess,
                 copyButtonFontSize = copyButtonFontSize,
                 copyButtonFontStyle = copyButtonFontStyle,
                 copyButtonFontWeight = copyButtonFontWeight,
@@ -233,8 +240,8 @@ internal fun MessageBarComponent(
 
 @Composable
 internal fun MessageBar(
-    message: String?,
-    error: String?,
+    successMessage: String?,
+    errorMessage: String?,
     successIcon: ImageVector,
     errorIcon: ImageVector,
     errorMaxLines: Int,
@@ -250,6 +257,7 @@ internal fun MessageBar(
     verticalPadding: Dp,
     horizontalPadding: Dp,
     showCopyButton: Boolean,
+    showCopyButtonOnSuccess: Boolean,
     copyButtonFontSize: TextUnit,
     copyButtonFontStyle: FontStyle,
     copyButtonFontWeight: FontWeight,
@@ -262,7 +270,7 @@ internal fun MessageBar(
         modifier = Modifier
             .fillMaxWidth()
             .background(
-                if (error != null) errorContainerColor
+                if (errorMessage != null) errorContainerColor
                 else successContainerColor
             )
             .padding(vertical = verticalPadding)
@@ -277,33 +285,35 @@ internal fun MessageBar(
         ) {
             Icon(
                 imageVector =
-                if (error != null) errorIcon
-                else successIcon,
+                    if (errorMessage != null) errorIcon
+                    else successIcon,
                 contentDescription = "Message Bar Icon",
-                tint = if (error != null) errorContentColor
+                tint = if (errorMessage != null) errorContentColor
                 else successContentColor
             )
             Spacer(modifier = Modifier.width(12.dp))
             Text(
-                text = message ?: (error ?: "Unknown"),
-                color = if (error != null) errorContentColor
+                text = successMessage ?: (errorMessage ?: "Unknown"),
+                color = if (errorMessage != null) errorContentColor
                 else successContentColor,
                 fontSize = fontSize,
                 fontStyle = fontStyle,
                 fontWeight = fontWeight,
                 fontFamily = fontFamily,
                 overflow = TextOverflow.Ellipsis,
-                maxLines = if (error != null) errorMaxLines else successMaxLines
+                maxLines = if (errorMessage != null) errorMaxLines else successMaxLines
             )
         }
-        if (error != null && showCopyButton) {
+        if ((errorMessage != null && showCopyButton) || (successMessage != null && showCopyButtonOnSuccess)) {
             Row(
                 modifier = Modifier.weight(1f),
                 horizontalArrangement = Arrangement.End
             ) {
                 TextButton(
                     onClick = {
-                        clipboardManager.setText(AnnotatedString(text = "$error"))
+                        clipboardManager.setText(
+                            AnnotatedString(text = errorMessage ?: successMessage ?: "Unknown")
+                        )
                         onMessageCopied?.invoke()
                     },
                     contentPadding = PaddingValues(vertical = 0.dp)

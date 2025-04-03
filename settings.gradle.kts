@@ -1,5 +1,4 @@
 pluginManagement {
-    includeBuild("convention-plugins")
     repositories {
         google()
         mavenCentral()
@@ -16,4 +15,3 @@ dependencyResolutionManagement {
 
 rootProject.name = "MessageBar-KMP"
 include(":messagebar")
-include(":composeapp")

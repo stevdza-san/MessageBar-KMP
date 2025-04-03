@@ -8,11 +8,10 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.composeCompiler)
-    id("com.vanniktech.maven.publish") version "0.30.0"
+    id("com.vanniktech.maven.publish") version "0.31.0"
 }
 
 kotlin {
-//    targetHierarchy.default()
     jvm("desktop")
     androidTarget {
         publishLibraryVariants("release")
@@ -31,6 +30,7 @@ kotlin {
         iosTarget.binaries.framework {
             baseName = "messagebar"
             isStatic = true
+            linkerOpts.add("-Xbinary=bundleId=com.stevdza_san.messagebar")
         }
     }
     @OptIn(ExperimentalWasmDsl::class)
@@ -54,43 +54,26 @@ kotlin {
     }
 
     sourceSets {
-        val androidMain by getting {
-            dependencies {
-                implementation(libs.androidx.activity.compose)
-            }
+        androidMain.dependencies {
+            implementation(libs.androidx.activity.compose)
         }
-        val commonMain by getting {
-            dependencies {
-                implementation(compose.runtime)
-                implementation(compose.foundation)
-                implementation(compose.material3)
-                implementation(compose.ui)
-                implementation(compose.components.resources)
-            }
+        iosMain.dependencies {}
+        commonMain.dependencies {
+            implementation(compose.runtime)
+            implementation(compose.foundation)
+            implementation(compose.material3)
+            implementation(compose.ui)
+            implementation(compose.components.resources)
         }
-        val commonTest by getting {
-            dependencies {
-                implementation(libs.kotlin.test)
-            }
+        commonTest.dependencies {
+            implementation(libs.kotlin.test)
         }
-        val iosArm64Main by getting {
-            dependencies {}
-        }
-
-        val iosSimulatorArm64Main by getting {
-            dependencies {}
-        }
-
-        val iosX64Main by getting {
-            dependencies {}
-        }
-
         val desktopMain by getting {
             dependencies {
                 implementation(compose.desktop.currentOs)
             }
         }
-        val wasmJsMain by getting {}
+        wasmJsMain.dependencies {}
     }
 }
 
@@ -115,7 +98,7 @@ compose.desktop {
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "com.stevdza-san.messagebarkmp"
-            packageVersion = "1.0.6"
+            packageVersion = "1.0.7"
             description = "Message Bar KMP"
             copyright = "© 2024 Stevdza-San. All rights reserved."
         }
@@ -126,7 +109,7 @@ mavenPublishing {
     coordinates(
         groupId = "com.stevdza-san",
         artifactId = "messagebarkmp",
-        version = "1.0.6"
+        version = "1.0.7"
     )
 
     // Configure POM metadata for the published artifact
@@ -134,7 +117,7 @@ mavenPublishing {
         name.set("Message Bar KMP")
         description.set("Animated Message Bar UI that can be wrapped around your composable content in order to display Error/Success messages in your app. Adapted to Material 3.")
         inceptionYear.set("2024")
-        url.set("https://github.com/stevdza-san/MessageBarKMP")
+        url.set("https://github.com/stevdza-san/MessageBar-KMP")
 
         licenses {
             license {
@@ -154,7 +137,7 @@ mavenPublishing {
 
         // Specify SCM information
         scm {
-            url.set("https://github.com/stevdza-san/MessageBarKMP")
+            url.set("https://github.com/stevdza-san/MessageBar-KMP")
         }
     }
 
@@ -164,5 +147,3 @@ mavenPublishing {
     // Enable GPG signing for all publications
     signAllPublications()
 }
-
-task("testClasses")
