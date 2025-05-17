@@ -64,6 +64,8 @@ kotlin {
             implementation(compose.material3)
             implementation(compose.ui)
             implementation(compose.components.resources)
+
+            implementation(libs.compose.icons)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -98,7 +100,7 @@ compose.desktop {
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "com.stevdza-san.messagebarkmp"
-            packageVersion = "1.0.7"
+            packageVersion = "1.0.8"
             description = "Message Bar KMP"
             copyright = "© 2024 Stevdza-San. All rights reserved."
         }
@@ -109,7 +111,7 @@ mavenPublishing {
     coordinates(
         groupId = "com.stevdza-san",
         artifactId = "messagebarkmp",
-        version = "1.0.7"
+        version = "1.0.8"
     )
 
     // Configure POM metadata for the published artifact

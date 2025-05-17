@@ -17,30 +17,30 @@ class MessageBarState {
         private set
 
     fun addSuccess(message: String) {
-        clearErrors()
+        clearMessages()
         success = message
         updated = !updated
     }
 
     fun addError(message: String) {
-        clearErrors()
+        clearMessages()
         errorMessage = message
         updated = !updated
     }
 
     fun addError(exception: Exception) {
-        clearErrors()
+        clearMessages()
         errorException = exception
         updated = !updated
     }
 
     internal fun reset() {
-        success = null
-        clearErrors()
+        clearMessages()
         updated = !updated
     }
 
-    private fun clearErrors() {
+    private fun clearMessages() {
+        success = null
         errorMessage = null
         errorException = null
     }

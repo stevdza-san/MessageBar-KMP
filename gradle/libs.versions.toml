@@ -2,24 +2,17 @@
 android-minSdk = "24"
 android-compileSdk = "35"
 nexus-publish = "2.0.0-rc-1"
-agp = "8.9.1"
+agp = "8.9.3"
 kotlin = "2.1.20"
-compose-plugin = "1.7.3"
+compose-plugin = "1.8.0"
 androidx-activityCompose = "1.10.1"
-core-ktx = "1.15.0"
-lifecycle-runtime-ktx = "2.8.7"
-compose-bom = "2025.03.01"
+icons = "1.1.1"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 nexus-publish = { module = "io.github.gradle-nexus.publish-plugin:io.github.gradle-nexus.publish-plugin.gradle.plugin", version.ref = "nexus-publish" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle-runtime-ktx" }
-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
-ui = { group = "androidx.compose.ui", name = "ui" }
-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
-material3 = { group = "androidx.compose.material3", name = "material3" }
+compose-icons = { module = "br.com.devsrsouza.compose.icons:feather", version.ref = "icons" }
 
 [plugins]
 kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
