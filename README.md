@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://central.sonatype.com/artifact/com.stevdza-san/messagebarkmp"><img alt="Profile" src="https://badgen.net/badge/Maven Central/v1.0.7/blue?icon=github"/></a>
+  <a href="https://central.sonatype.com/artifact/com.stevdza-san/messagebarkmp"><img alt="Profile" src="https://badgen.net/badge/Maven Central/v1.0.8/blue?icon=github"/></a>
 </p>
 
 # <p align="center">☁️ MessageBar</p>
@@ -21,7 +21,7 @@ and it is built to support Material 3 design system. Android/iOS/Desktop/Web pla
 You can add a dependency inside the `commonMain` source set:
 ```gradle
 commonMain.dependencies {
-    implementation("com.stevdza-san:messagebarkmp:1.0.7")
+    implementation("com.stevdza-san:messagebarkmp:1.0.8")
 }
 ```
 ## Usage
