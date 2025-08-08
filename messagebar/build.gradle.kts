@@ -1,6 +1,7 @@
-import com.vanniktech.maven.publish.SonatypeHost
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 
 plugins {
@@ -8,17 +9,15 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.composeCompiler)
-    id("com.vanniktech.maven.publish") version "0.31.0"
+    id("com.vanniktech.maven.publish") version "0.34.0"
 }
 
 kotlin {
     jvm("desktop")
     androidTarget {
         publishLibraryVariants("release")
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = "11"
-            }
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_17)
         }
         publishLibraryVariants("release", "debug")
     }
@@ -35,7 +34,7 @@ kotlin {
     }
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
-        moduleName = "composeApp"
+        outputModuleName.set("composeApp")
         browser {
             val rootDirPath = project.rootDir.path
             val projectDirPath = project.projectDir.path
@@ -87,8 +86,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 }
 
@@ -100,7 +99,7 @@ compose.desktop {
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "com.stevdza-san.messagebarkmp"
-            packageVersion = "1.0.8"
+            packageVersion = "1.0.9"
             description = "Message Bar KMP"
             copyright = "© 2024 Stevdza-San. All rights reserved."
         }
@@ -111,7 +110,7 @@ mavenPublishing {
     coordinates(
         groupId = "com.stevdza-san",
         artifactId = "messagebarkmp",
-        version = "1.0.8"
+        version = "1.0.9"
     )
 
     // Configure POM metadata for the published artifact
@@ -144,7 +143,7 @@ mavenPublishing {
     }
 
     // Configure publishing to Maven Central
-    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+    publishToMavenCentral()
 
     // Enable GPG signing for all publications
     signAllPublications()

@@ -1,10 +1,10 @@
 [versions]
 android-minSdk = "24"
-android-compileSdk = "35"
-nexus-publish = "2.0.0-rc-1"
-agp = "8.9.3"
-kotlin = "2.1.20"
-compose-plugin = "1.8.0"
+android-compileSdk = "36"
+nexus-publish = "2.0.0"
+agp = "8.12.0"
+kotlin = "2.2.0"
+compose-plugin = "1.8.2"
 androidx-activityCompose = "1.10.1"
 icons = "1.1.1"
 

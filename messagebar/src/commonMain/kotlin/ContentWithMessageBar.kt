@@ -110,7 +110,7 @@ fun ContentWithMessageBar(
     verticalPadding: Dp = 12.dp,
     horizontalPadding: Dp = 12.dp,
     spacing: Dp = 12.dp,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     LaunchedEffect(key1 = messageBarState) {
         messageBarState.reset()
@@ -184,7 +184,7 @@ internal fun MessageBarComponent(
     verticalPadding: Dp,
     horizontalPadding: Dp,
     spacing: Dp,
-    onMessageCopied: (() -> Unit)? = null
+    onMessageCopied: (() -> Unit)? = null,
 ) {
     val scope = rememberCoroutineScope()
     var showMessageBar by remember { mutableStateOf(false) }
@@ -274,7 +274,7 @@ internal fun MessageBar(
     verticalPadding: Dp,
     horizontalPadding: Dp,
     spacing: Dp,
-    onMessageCopied: (() -> Unit)? = null
+    onMessageCopied: (() -> Unit)? = null,
 ) {
     val clipboardManager = LocalClipboardManager.current
 
@@ -333,7 +333,8 @@ internal fun MessageBar(
                 ) {
                     Text(
                         text = "Copy",
-                        color = errorContentColor,
+                        color = if (errorMessage != null && showCopyButton) errorContentColor
+                        else successContentColor,
                         fontSize = copyButtonFontSize,
                         fontStyle = copyButtonFontStyle,
                         fontWeight = copyButtonFontWeight,
